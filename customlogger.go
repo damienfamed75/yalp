@@ -11,17 +11,23 @@ import (
 // and the zapcore encoder configuration.
 type CustomLogger struct {
 	logger *zap.Logger
+	level  zap.AtomicLevel
+	output *os.File
+	config zapcore.EncoderConfig
 }
 
 var _ Logger = &CustomLogger{}
 
 // NewCustomLogger returns a custom logging
 // object for the Classy service to use.
-func NewCustomLogger(level []byte, config zapcore.EncoderConfig) *CustomLogger {
+func NewCustomLogger(level string, config zapcore.EncoderConfig) *CustomLogger {
 	logLevel := zap.NewAtomicLevel()
-	logLevel.UnmarshalText(level)
+	logLevel.UnmarshalText([]byte(level))
 
 	return &CustomLogger{
+		level:  logLevel,
+		config: config,
+		output: os.Stdout,
 		logger: zap.New(zapcore.NewCore(zapcore.NewJSONEncoder(config), zapcore.Lock(os.Stdout), logLevel)),
 	}
 }
