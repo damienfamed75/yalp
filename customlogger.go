@@ -64,3 +64,23 @@ func interfaceToZapField(iFields ...interface{}) (fields []zapcore.Field) {
 	}
 	return
 }
+
+// SetLevel changes the logger level
+func (l *CustomLogger) SetLevel(level string) {
+	// flush the existing logger before changing to new log level
+	l.logger.Sync()
+
+	// Read in the new zapcore AtomicLevel and apply new zap instance
+	l.level.UnmarshalText([]byte(level))
+	l.logger = zap.New(zapcore.NewCore(zapcore.NewJSONEncoder(l.config), zapcore.Lock(l.output), l.level))
+}
+
+// SetOutput changes the output
+func (l *CustomLogger) SetOutput(output *os.File) {
+	// flush the existing logger before changing to new log output
+	l.logger.Sync()
+
+	// set the new output and apply new zap instance
+	l.output = output
+	l.logger = zap.New(zapcore.NewCore(zapcore.NewJSONEncoder(l.config), zapcore.Lock(l.output), l.level))
+}
