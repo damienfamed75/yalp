@@ -20,9 +20,9 @@ var _ Logger = &CustomLogger{}
 
 // NewCustomLogger returns a custom logging
 // object for the Classy service to use.
-func NewCustomLogger(level string, config zapcore.EncoderConfig) *CustomLogger {
+func NewCustomLogger(level []byte, config zapcore.EncoderConfig) *CustomLogger {
 	logLevel := zap.NewAtomicLevel()
-	logLevel.UnmarshalText([]byte(level))
+	logLevel.UnmarshalText(level)
 
 	return &CustomLogger{
 		level:  logLevel,
@@ -72,12 +72,12 @@ func interfaceToZapField(iFields ...interface{}) (fields []zapcore.Field) {
 }
 
 // SetLevel changes the logger level
-func (l *CustomLogger) SetLevel(level string) {
+func (l *CustomLogger) SetLevel(level []byte) {
 	// flush the existing logger before changing to new log level
 	l.logger.Sync()
 
 	// Read in the new zapcore AtomicLevel and apply new zap instance
-	l.level.UnmarshalText([]byte(level))
+	l.level.UnmarshalText(level)
 	l.logger = zap.New(zapcore.NewCore(zapcore.NewJSONEncoder(l.config), zapcore.Lock(l.output), l.level))
 }
 
