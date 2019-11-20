@@ -19,7 +19,4 @@ type Logger interface {
 	// of properties in an AddVertex function. Which would not create a proper
 	// query for the gremlin server and should stop.
 	Fatal(msg string, fields ...interface{})
-	// Sugar returns a sugared logger, which is typically slower for logging
-	// but is nicer to read than the typical logger.
-	Sugar() Logger
 }

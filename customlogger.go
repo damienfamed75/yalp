@@ -81,12 +81,3 @@ func (l *CustomLogger) SetOutput(output *os.File) {
 	l.output = output
 	l.logger = zap.New(zapcore.NewCore(zapcore.NewJSONEncoder(l.config), zapcore.Lock(l.output), l.level))
 }
-
-func (l *CustomLogger) Sugar() Logger {
-	return &CustomLogger{
-		logger: l.logger.Sugar(),
-		level:  l.level,
-		output: l.output,
-		config: l.config,
-	}
-}
