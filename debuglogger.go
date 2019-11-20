@@ -22,31 +22,31 @@ func NewDebugLogger() *DebugLogger {
 // Info does nothing.
 func (l *DebugLogger) Info(msg string, iFields ...interface{}) {
 	fields := interfaceToZapField(iFields...)
-	l.logger.Info(msg, fields...)
+	l.logger.(*zap.Logger).Info(msg, fields...)
 }
 
 // Debug logs nothing.
 func (l *DebugLogger) Debug(msg string, iFields ...interface{}) {
 	fields := interfaceToZapField(iFields...)
-	l.logger.Debug(msg, fields...)
+	l.logger.(*zap.Logger).Debug(msg, fields...)
 }
 
 // Error logs nothing.
 func (l *DebugLogger) Error(msg string, iFields ...interface{}) {
 	fields := interfaceToZapField(iFields...)
-	l.logger.Error(msg, fields...)
+	l.logger.(*zap.Logger).Error(msg, fields...)
 }
 
 // Warn does nothing.
 func (l *DebugLogger) Warn(msg string, iFields ...interface{}) {
 	fields := interfaceToZapField(iFields...)
-	l.logger.Warn(msg, fields...)
+	l.logger.(*zap.Logger).Warn(msg, fields...)
 }
 
 // Fatal logs nothing.
 func (l *DebugLogger) Fatal(msg string, iFields ...interface{}) {
 	fields := interfaceToZapField(iFields...)
-	l.logger.Fatal(msg, fields...)
+	l.logger.(*zap.Logger).Fatal(msg, fields...)
 }
 
 // Sugar returns a sugared logger which is typically slower, but nicer to read.

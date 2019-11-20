@@ -35,37 +35,37 @@ func NewCustomLogger(level []byte, config zapcore.EncoderConfig) *CustomLogger {
 // Info logs at an info level.
 func (l *CustomLogger) Info(msg string, iFields ...interface{}) {
 	fields := interfaceToZapField(iFields...)
-	l.logger.Info(msg, fields...)
+	l.logger.(*zap.Logger).Info(msg, fields...)
 }
 
 // Debug logs at an debug level.
 func (l *CustomLogger) Debug(msg string, iFields ...interface{}) {
 	fields := interfaceToZapField(iFields...)
-	l.logger.Debug(msg, fields...)
+	l.logger.(*zap.Logger).Debug(msg, fields...)
 }
 
 // Warn warns the client.
 func (l *CustomLogger) Warn(msg string, iFields ...interface{}) {
 	fields := interfaceToZapField(iFields...)
-	l.logger.Warn(msg, fields...)
+	l.logger.(*zap.Logger).Warn(msg, fields...)
 }
 
 // Error logs at an error level.
 func (l *CustomLogger) Error(msg string, iFields ...interface{}) {
 	fields := interfaceToZapField(iFields...)
-	l.logger.Error(msg, fields...)
+	l.logger.(*zap.Logger).Error(msg, fields...)
 }
 
 // Fatal logs at a fatal level and exits.
 func (l *CustomLogger) Fatal(msg string, iFields ...interface{}) {
 	fields := interfaceToZapField(iFields...)
-	l.logger.Fatal(msg, fields...)
+	l.logger.(*zap.Logger).Fatal(msg, fields...)
 }
 
 // SetLevel changes the logger level
 func (l *CustomLogger) SetLevel(level []byte) {
 	// flush the existing logger before changing to new log level
-	l.logger.Sync()
+	l.logger.(*zap.Logger).Sync()
 
 	// Read in the new zapcore AtomicLevel and apply new zap instance
 	l.level.UnmarshalText(level)
@@ -75,7 +75,7 @@ func (l *CustomLogger) SetLevel(level []byte) {
 // SetOutput changes the output
 func (l *CustomLogger) SetOutput(output *os.File) {
 	// flush the existing logger before changing to new log output
-	l.logger.Sync()
+	l.logger.(*zap.Logger).Sync()
 
 	// set the new output and apply new zap instance
 	l.output = output
