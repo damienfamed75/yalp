@@ -10,7 +10,7 @@ import (
 // CustomLogger is a customizable logging.Logger where you can choose the level
 // and the zapcore encoder configuration.
 type CustomLogger struct {
-	logger *zap.Logger
+	logger Logger
 	level  zap.AtomicLevel
 	output *os.File
 	config zapcore.EncoderConfig

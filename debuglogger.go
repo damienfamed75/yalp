@@ -5,7 +5,7 @@ import "go.uber.org/zap"
 // DebugLogger is the default logger used for the Quirk client.
 // This logger will not print anything out.
 type DebugLogger struct {
-	logger *zap.Logger
+	logger Logger
 }
 
 var _ Logger = &DebugLogger{}
