@@ -48,3 +48,8 @@ func (l *DebugLogger) Fatal(msg string, iFields ...interface{}) {
 	fields := interfaceToZapField(iFields...)
 	l.logger.Fatal(msg, fields...)
 }
+
+// Sugar returns a sugared logger which is typically slower, but nicer to read.
+func (l *DebugLogger) Sugar() Logger {
+	return &DebugLogger{l.logger.Sugar()}
+}

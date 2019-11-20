@@ -62,15 +62,6 @@ func (l *CustomLogger) Fatal(msg string, iFields ...interface{}) {
 	l.logger.Fatal(msg, fields...)
 }
 
-// interfaceToZapField takes the interfaces passed in and type asserts them
-// into a zap.Field and returns a slice.
-func interfaceToZapField(iFields ...interface{}) (fields []zapcore.Field) {
-	for i := 0; i < len(iFields); i++ {
-		fields = append(fields, iFields[i].(zapcore.Field))
-	}
-	return
-}
-
 // SetLevel changes the logger level
 func (l *CustomLogger) SetLevel(level []byte) {
 	// flush the existing logger before changing to new log level
@@ -89,4 +80,13 @@ func (l *CustomLogger) SetOutput(output *os.File) {
 	// set the new output and apply new zap instance
 	l.output = output
 	l.logger = zap.New(zapcore.NewCore(zapcore.NewJSONEncoder(l.config), zapcore.Lock(l.output), l.level))
+}
+
+func (l *CustomLogger) Sugar() Logger {
+	return &CustomLogger{
+		logger: l.logger.Sugar(),
+		level:  l.level,
+		output: l.output,
+		config: l.config,
+	}
 }
