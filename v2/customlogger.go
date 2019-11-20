@@ -84,7 +84,7 @@ func (l *CustomLogger) SetOutput(output *os.File) {
 
 func (l *CustomLogger) Sugar() Logger {
 	return &CustomLogger{
-		logger: l.Sugar(),
+		logger: l.logger.Sugar(),
 		level:  l.level,
 		output: l.output,
 		config: l.config,

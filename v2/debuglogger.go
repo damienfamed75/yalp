@@ -51,5 +51,5 @@ func (l *DebugLogger) Fatal(msg string, iFields ...interface{}) {
 
 // Sugar returns a sugared logger which is typically slower, but nicer to read.
 func (l *DebugLogger) Sugar() Logger {
-	return &DebugLogger{l.Sugar()}
+	return &DebugLogger{l.logger.Sugar()}
 }
