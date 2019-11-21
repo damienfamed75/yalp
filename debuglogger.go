@@ -48,3 +48,7 @@ func (l *DebugLogger) Fatal(msg string, iFields ...interface{}) {
 	fields := interfaceToZapField(iFields...)
 	l.logger.Fatal(msg, fields...)
 }
+
+func (l *DebugLogger) Sync() error {
+	return l.logger.Sync()
+}

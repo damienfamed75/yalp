@@ -1,6 +1,8 @@
 package yalp
 
-import "go.uber.org/zap"
+import (
+	"go.uber.org/zap"
+)
 
 // SugarLogger is the default logger used for the Quirk client.
 // This logger will not print anything out.
@@ -12,8 +14,8 @@ var _ Logger = &SugarLogger{}
 
 // NewSugarLogger returns a nil logging
 // object for the Quirk client to use.
-func NewSugarLogger() *SugarLogger {
-	l, _ := zap.NewDevelopment()
+func NewSugarLogger(cfg zap.Config) *SugarLogger {
+	l, _ := cfg.Build()
 	ll := l.Sugar()
 	return &SugarLogger{
 		logger: ll,
@@ -43,4 +45,8 @@ func (l *SugarLogger) Warn(msg string, iFields ...interface{}) {
 // Fatal logs nothing.
 func (l *SugarLogger) Fatal(msg string, iFields ...interface{}) {
 	l.logger.Fatalf(msg, iFields...)
+}
+
+func (l *SugarLogger) Sync() error {
+	return l.logger.Sync()
 }

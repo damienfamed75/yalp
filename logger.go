@@ -19,4 +19,5 @@ type Logger interface {
 	// of properties in an AddVertex function. Which would not create a proper
 	// query for the gremlin server and should stop.
 	Fatal(msg string, fields ...interface{})
+	Sync() error
 }

@@ -27,5 +27,4 @@ func (*NilLogger) Warn(string, ...interface{}) {}
 // Fatal logs nothing.
 func (*NilLogger) Fatal(string, ...interface{}) {}
 
-// Sugar returns another nil logger.
-func (*NilLogger) Sugar() Logger { return NewNilLogger() }
+func (*NilLogger) Sync() error { return nil }
